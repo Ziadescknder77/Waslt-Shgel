@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel= "stylesheet" href="styless2.css">
+    <title>Document</title>
+</head>
+<body>
+
+  <header>
+      <img src="imgs/تصميم بدون عنوان.png"
+       alt=" WASLAT SHGEL" >
+       <nav class ="navigation">
+
+     
+   <ul> 
+            <li><a href="#aboutMe">عننا</a></li>
+            <li><a href="#MyWorks">اعمالي</a></li>
+            <li><a href="#ContactMe">تواصل معنا</a></li>
+        </ul> 
+    </nav> 
+   
+      
+  </header>
+
+<hr/>
+<section class="hero">
+  <img src=svg/arrow.svg alt="arrow">
+  <div class="herosub">
+    <h1 class="name"> Ziad</h1>
+    <h1 class="name"> Ahmed</h1>
+    <h1 class="name"> Baraa</h1>
+    <h1 class="Title">  يلا نشتغل</h1>
+    <div class="heroBtns">
+<a class="hireMe" href="https://wa.me/201068922005">شغلني</a>
+
+        <section class="service-request">
+    <div class="request-container">
+        <h2>اطلبي صنيعي (سباك، نجار، كهربائي)</h2>
+        <p>اكتبي طلبك وهنوصلك بأقرب حد ليكِ</p>
+
+        <form class="order-form">
+            <div class="form-group">
+                <label for="worker-type">محتاجة مين؟</label>
+                <select id="worker-type" name="worker" class="input-field">
+                    <option value="plumber">سباك</option>
+                    <option value="carpenter">نجار</option>
+                    <option value="electrician">كهربائي</option>
+                    <option value="painter">نقاش</option>
+                    <option value="humuns work in home">عماله منزليه</option>
+                    <option value="other">اخر</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="details" >إيه المشكلة اللي عندك؟</label>
+                <textarea id="details" placeholder="مثلاً: الحنفية بتنقط، أو عايزة أركب نجفة..." required="input-field"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="phone" required>رقم موبايلك للتواصل</label>
+                <input type="tel" id="phone" placeholder="01xxxxxxxxx" required class="input-field">
+            </div>
+
+            <button type="button" onclick="sendToWhatsApp()" class="send-request-btn">إرسال الطلب الآن</button>
+
+<script>
+function sendToWhatsApp() {
+    // سحب البيانات
+    const worker = document.getElementById('worker-type').value;
+    const details = document.getElementById('details').value;
+    const phone = document.getElementById('phone').value;
+
+    // تجهيز الرسالة (تأكد من استخدام علامة ` )
+    const message = `طلب خدمة جديد:%0A- المهنة: ${worker}%0A- التفاصيل: ${details}%0A- رقم العميل: ${phone}`;
+    
+    const myNumber = "201157586610";
+    
+    // فتح الرابط
+    window.open(`https://wa.me/${myNumber}?text=${message}`, '_blank');
+}
+</script>
+
+        </form>
+    </div>
+</section>
+       
+            
+            
+            <div class="SHGEL">
+                <form onsubmit="sendToWhatsApp(); return false;">
+                    <h2>شوف انت عايز تشتغل ايه و احنا نحبهلك لغيط عندك</h2>
+                    <input type="text" id="name" placeholder="اسمك" required>
+                    <input type="text" id="job" placeholder="نوع الشغل" required>
+                    <textarea id="details" placeholder="تفاصيل الطلب" required></textarea>
+                    <button type="submit">قدم على الشغل اللي عاوزه</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function sendToWhatsApp() {
+    // سحب البيانات من الحقول
+    let name = document.getElementById("name").value;
+    let job = document.getElementById("job").value;
+    let details = document.getElementById("details").value;
+    
+    let phone = "201068922005"; // رقمك بدون علامة +
+    
+    // تجهيز نص الرسالة (استخدمنا Backticks هنا)
+    let message = `اسم العميل: ${name}%0Aنوع الشغل: ${job}%0Aالتفاصيل: ${details}`;
+    
+    // إنشاء الرابط
+    let url = `https://wa.me/${phone}?text=${message}`;
+    
+    // فتح الرابط في نافذة جديدة
+    window.open(url, "_blank");
+}
+</script>
+  
+
+
+
+    </div>
+  </div>
+ 
+</section>
+<section class="aboutMe"  id="aboutMe"  >
+
+    <img
+    src="svg/AboutMe.svg"
+    alt="aboutMe image"
+    class="aboutMeimg"
+    />
+    <div class="text container"><div class="textTitle">
+        <h1 class="aboutName">About</h1>
+        <h1 class="aboutTitle">Me</h1>
+        <img src="svg/lightbulb.svg" alt="ligh"
+        class="light">
+    </div>
+    <p class="aboutMePar">كل شيء بدأ بصداقة…
+
+نحن ثلاثه
+  أصدقاء عرفنا بعضنا منذ أيام المدرسة الابتدائية. كبرنا معًا، وتشاركنا الكثير من اللحظات والتجارب.
+
+ومع مرور الوقت لم تعد صداقتنا مجرد ذكريات، بل تحولت إلى فكرة. فكرة أن نصنع شيئًا يجمعنا ويعبر عنا.
+
+بدأنا التفكير، تبادلنا الآراء، واجتمعنا حول هدف واحد:
+أن نحول أفكارنا إلى مشروع حقيقي.
+
+اليوم نحن فريق واحد يجمع بين الصداقة، الشغف، والعمل.
+
+أحمد ,  براء  , زياد</p> 
+    </div>
+</section>
+<section class="works"  id="MyWorks">
+    <div class="workscontainer">
+        <div class="projectTitle"><h1 class="aboutMe">My Recent works</h1>
+        
+    </div>
+    <ul>
+        <li><a href="" target="_blank"><img src="imgs/istockphoto-1061173208-1024x1024.jpg"  width="500"    alt="نجار">
+        </a>
+    </li>
+    <li><a href=""target="_blank"><img src="imgs/istockphoto-1161937292-1024x1024.jpg" width="500" alt="صنايعني"></a>
+    </li>
+    <li><a href=""target="_blank"><img src="imgs/istockphoto-2156908250-1024x1024.jpg" width="500" alt="حداد"></a></li>
+   <li><a href="" target="_blank"><img src="imgs/681d6cf257560d18ba1109b3db2eaacc.jpg"  width="500"    alt="شبف">
+        </a>
+    </li>
+    <li><a href=""target="_blank"><img src="imgs/3923dacfe3a0efb0880c44ee760b182e.jpg" width="500" alt="ميكاميكي"></a>
+    </li>
+    <li><a href=""target="_blank"><img src="imgs/1e333d1dc2fb63365f2d48dc5dcf36c0.jpg" width="500" alt="سباك"></a></li> </ul>
+    </div>
+    
+</section>
+<section class="contact"
+id="#ContactMe"><div class="contentTitle"><h1 class="aboutName">Content</h1><h1 class="aboutTitle">Me</h1>
+<div class="Contact"><div class="emaliandphone">
+    <img src="svg/phone.svg" alt="emali logo">
+    <a href="emalil:zied.escknder100@gmail.com"><h3>zied.escknder100@gmail.com</h3></a>
+    <div class="emaliandphone">
+        <img src="svg/phone.svg" alt="phone logo"> <a href="https://wa.me/201068922005"></a><h3> +01068922005 للعمال او الشغل
+        </h3>
+    <h3>+01157586610  للعمال او طلب شكاوي </h3>
+    <h3>+01002608464 للعملاء او طلب الخدمه</h3>
+        <div class="SocialMedia"><a href="https://www.instagram.com/1ziiadd_/ " target="_blank"><img src="svg/instagram-2-1-logo-svgrepo-com.svg" width="50"
+            alt="My instagram "></a>
+        <a href="https://www.facebook.com/zied.algader/" target="_blank"><img src="svg/facebook-color-svgrepo-com.svg" width="50" 
+            alt=" My facebook "></a></div>
+    </div>
+</div></div>
+
+
+
+
+</div>
+
+
+
+
+</section>
+<hr>
+<footer><p>bulit by ZiadM</p></footer>
+</body>
+</html>
