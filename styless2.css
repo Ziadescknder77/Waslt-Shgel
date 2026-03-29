@@ -531,4 +531,56 @@ button:hover {
 }::placeholder {
     color: #000000;
     opacity: 100;
+}@media (max-width: 600px) {
+    /* 1. تظبيط الهيدر واللوجو */
+    header {
+        display: flex !important;
+        flex-direction: column !important; /* يخلي اللوجو فوق واللينكات تحت */
+        align-items: center !important;
+        text-align: center !important;
+    }
+
+    header img {
+        width: 150px !important; /* تصغير حجم اللوجو */
+        height: auto !important;
+        margin-bottom: 15px !important;
+    }
+
+    /* 2. تظبيط قائمة اللينكات (الناف) */
+    .navigation ul {
+        display: flex !important;
+        flex-direction: column !important; /* اللينكات تحت بعض بدل ما هي محشورة بالعرض */
+        gap: 10px !important;
+        padding: 0 !important;
+    }
+
+    /* 3. تظبيط منطقة الأسماء (Hero Section) */
+    .hero {
+        padding: 20px !important;
+        text-align: center !important;
+    }
+
+    .hero .name {
+        font-size: 28px !important; /* تصغير الأسماء شوية عشان متطلعش بره */
+        margin: 5px 0 !important;
+    }
+
+    /* 4. تظبيط الكروت والخدمات (MyWorks & Service Request) */
+    .workscontainer ul, .request-container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .workscontainer ul li img {
+        width: 90% !important; /* الصور تاخد عرض الموبايل */
+        height: auto !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* 5. تظبيط الفورم (الفراغات اللي بيدخل فيها البيانات) */
+    .input-field, textarea {
+        width: 95% !important; /* تخلي الخانات مفرودة بعرض الشاشة */
+        margin-bottom: 10px !important;
+    }
 }
