@@ -10,7 +10,7 @@
     font-family: "poppins",serif;
 }
 body{
-    background: url(imgs/tatra-mountains-mountain-range-sunset-orange-sky-europe-5k-3840x2160-8564.jpg);
+    background: url(imgs/moonrise-rolling-3840x2160-25877.jpg)
 }
 header {
     display: flex;
@@ -85,6 +85,7 @@ Title{
    margin: 5rem auto;
    max-width: 1200px;
    gap: 10rem;
+   
 }
 .textcontainer{
     display: flex;
@@ -98,19 +99,20 @@ font-size: 2rem;
 color: #ffffff;
 }
 .aboutName{
-    color: #000000;
+    color: #ffffff;
 }
 .aboutTitle{
-    color: #000;
+    color: #ffffff;
 }
 .aboutMePar{
     color: #ffffff;
 text-align: justify;
 }
 .works{
-    background-image:url(svg/background.svg) ;
+    
     padding: 10rem 10rem;
     margin: 5rem 0rem;
+    color: #ffffff;
 }
 .workscontainer{
      display: flex ;
@@ -138,7 +140,7 @@ text-align: justify;
 }
 .works li {
     border-radius: 16px;
-    background-color: black  ;
+    background-color: rgb(0, 0, 0)  ;
     backdrop-filter: blur(4px) ;
     padding: 1rem 4rem ;
 }
@@ -159,6 +161,7 @@ text-align: justify;
    gap: 2rem;
    margin: 2rem auto;
    max-width: 1200px;
+   
 }
 .contectTitle{  display: flex ;
     justify-content:  center;
@@ -166,6 +169,7 @@ text-align: justify;
    gap: 5px;
    margin-bottom: 10px;
    font-size: 2rem;
+    background-image: url(imgs/snow-mountains-3840x2160-25876.jpg); ;
 }
 .contect{
      display: flex ;
@@ -173,9 +177,10 @@ text-align: justify;
    align-items: center;
    margin-right: 5rem;
    gap: 20px;
+   background-image: url(imgs/snow-mountains-3840x2160-25876.jpg); ;
 }
 .contect h3, .contect a{
-    color: white;
+    color: rgb(0, 0, 0);
     text-decoration: none;
 }
 .emaliandphone{
@@ -327,7 +332,7 @@ input[type="text"], textarea {
     padding: 12px 15px;
     border: 2px solid transparent;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgb(255, 255, 255);
     color: #fff;
     font-size: 16px;
     outline: none;
@@ -582,5 +587,150 @@ button:hover {
     .input-field, textarea {
         width: 95% !important; /* تخلي الخانات مفرودة بعرض الشاشة */
         margin-bottom: 10px !important;
+    }
+}@media (max-width: 600px) {
+    /* 1. خلي الفورم نفسها تاخد عرض الشاشة */
+    form {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        padding: 10px !important;
+        align-items: center !important;
+    }
+
+    /* 2. تكبير خانات الإدخال (الاسم، نوع الشغل، التفاصيل) */
+    input[type="text"], 
+    input[type="tel"], 
+    textarea, 
+    select {
+        width: 90% !important; /* عشان ميبقوش لازقين في الحواف */
+        font-size: 18px !important; /* تكبير الخط عشان يبان وأنت بتكتب */
+        padding: 12px !important; /* مساحة داخلية عشان الكلام ميبقاش مخنوق */
+        margin-bottom: 15px !important;
+        border-radius: 8px !important; /* شكل أشيك */
+    }
+
+    /* 3. تكبير الزراير (إرسال الطلب / قدم على الشغل) */
+    button, .send-request-btn, .hireMe {
+        width: 90% !important;
+        height: auto !important;
+        padding: 15px !important;
+        font-size: 20px !important;
+        font-weight: bold !important;
+        margin: 10px 0 !important;
+    }
+
+    /* 4. تظبيط الـ Labels (العناوين اللي فوق الخانات) */
+    label {
+        width: 90% !important;
+        text-align: right !important; /* عشان الكلام العربي يبدأ صح */
+        margin-bottom: 5px !important;
+        font-size: 16px !important;
+    }
+}/* إعدادات عامة */
+.feedback-text {
+    font-family: 'Cairo', sans-serif;
+    background:url(imgs/snow-mountains-3840x2160-25476.jpg) ;
+    margin: 0;
+    direction: rtl; /* لدعم اللغة العربية */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* قسم آراء العملاء */
+.testimonials-section {
+    padding: 60px 0;
+    background:url(imgs/snow-mountains-3840x2160-25876.jpg) ;;
+    background-color: #ffffff;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 18px;
+    color: #777;
+    margin-bottom: 50px;
+}
+
+/* شبكة البطاقات */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* تصميم البطاقة */
+.testimonial-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px); /* تأثير خفيف عند الوقوف عليها */
+}
+
+/* معلومات العميل */
+.client-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.client-info img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-left: 15px; /* مسافة على اليسار في RTL */
+    object-fit: cover;
+}
+
+.client-info h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #000000;
+}
+
+.client-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #000000;
+}
+
+/* التقييم بالنجوم */
+.rating {
+    color: #ffc107; /* لون ذهبي للنجوم */
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+/* نص الرأي */
+.feedback-text {
+    font-size: 16px;
+    color: #000000;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 28px;
+    }
+    .testimonial-card {
+        padding: 20px;
     }
 }
