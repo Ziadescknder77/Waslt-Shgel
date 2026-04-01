@@ -43,7 +43,7 @@
 
         <form class="order-form">
             <div class="form-group">
-                <label for="worker-type">محتاجة مين؟</label>
+                <label style="color: #ffffff;" for="worker-type">محتاجة مين؟</label>
                 <select id="worker-type" name="worker" class="input-field">
                     <option value="plumber">سباك</option>
                     <option value="carpenter">نجار</option>
@@ -58,12 +58,12 @@
             </div>
 
             <div class="form-group">
-                <label for="details" >إيه المشكلة اللي عندك؟</label>
+                <label style="color: #ffffff;" for="details" >إيه المشكلة اللي عندك؟</label>
                 <textarea id="details" placeholder="مثلاً: الحنفية بتنقط، أو عايزة أركب نجفة..." required="input-field"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="phone" required>رقم موبايلك للتواصل</label>
+                <label style="color: aliceblue;" for="phone" required>رقم موبايلك للتواصل</label>
                 <input type="tel" id="phone" placeholder="01xxxxxxxxx" required class="input-field">
             </div>
 
@@ -132,6 +132,200 @@ function sendToWhatsApp() {
   </div>
  
 </section>
+
+
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وصلة شغل | بحث ذكي</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        body {
+            margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif;
+            background-size: cover; background-attachment: fixed;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+        }
+        .main-card {
+            background: white; padding: 40px 20px; border-radius: 20px;
+            width: 90%; max-width: 600px; text-align: center; box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        input[type="text"] {
+            width: 100%; padding: 18px; font-size: 22px; border: 3px solid #ffffff;
+            border-radius: 12px; margin-bottom: 15px; text-align: center; font-weight: bold;
+            color: #000;
+        }
+        button {
+            width: 100%; padding: 18px; background: #27ae60; color: white;
+            border: none; border-radius: 12px; font-size: 20px; cursor: pointer; font-weight: bold;
+        }
+        #results-container { display: none; margin-top: 25px; }
+        #map { height: 350px; width: 100%; border-radius: 15px; border: 1px solid #000000; }
+        .loading { color: #f39c12; font-weight: bold; display: none; margin-top: 10px; }
+    </style>
+</head>
+
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>خريطة فنيين وصلة شغل</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body { font-family: sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }
+        .search-container { margin-bottom: 20px; text-align: center; }
+        input { padding: 10px; width: 250px; border-radius: 5px; border: 1px solid #ccc; }
+        button { padding: 10px 20px; background: #00bcd4; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #map { height: 500px; width: 100%; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+    <div class="search-container">
+        <h2 style="color: #ffffff;">ابحث عن أقرب فني في منطقتك 🛠️</h2>
+        <input type="text" id="areaInput" placeholder="اكتب منطقتك (مثلاً: المعادي)">
+        <button onclick="searchArea()">بحث على الخريطة</button>
+    </div>
+    
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // 1. تشغيل الخريطة (بداية من القاهرة)
+        var map = L.map('map').setView([30.0444, 31.2357], 12);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        // 2. داتا وهمية للفنيين (المفروض دي تيجي من عندك)
+        const technicians = [
+            { name: "أحمد السباك", lat: 30.0444, lng: 31.2357, job: "سباك" },
+            { name: "محمود الكهربائي", lat: 29.9602, lng: 31.2569, job: "كهربائي" },
+            { name: "إبراهيم نجار", lat: 30.0771, lng: 31.2859, job: "نجار" }
+        ];
+
+        // إضافة الفنيين للخريطة
+        technicians.forEach(tech => {
+            L.marker([tech.lat, tech.lng]).addTo(map)
+                .bindPopup(`<b>${tech.name}</b><br>التخصص: ${tech.job}`);
+        });
+
+        // 3. وظيفة البحث وتحريك الخريطة
+        async function searchArea() {
+            const area = document.getElementById('areaInput').value;
+            if (!area) return alert("من فضلك اكتب اسم المنطقة");
+
+            // استخدام خدمة مجانية لتحويل الاسم لإحداثيات (Nominatim)
+            const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${area}`);
+            const data = await response.json();
+
+            if (data.length > 0) {
+                const lat = data[0].lat;
+                const lon = data[0].lon;
+                
+                // تحريك الخريطة للمكان الجديد
+                map.setView([lat, lon], 14);
+                
+                // وضع علامة لمكان العميل
+                L.circle([lat, lon], { color: 'red', radius: 500 }).addTo(map)
+                    .bindPopup("موقعك الحالي").openPopup();
+            } else {
+                alert("لم نجد هذه المنطقة، حاول مرة أخرى");
+            }
+        }
+        
+    </script>
+</body>
+</html>
+
+<div class="worker-card">
+    <h2>سجل كفني في وصلة شغل 👷‍♂️</h2>
+
+    
+    <form action="insert.php" method="POST">
+        <label style="color: #000000;">الاسم بالكامل:</label>
+        <input type="text" name="full_name" placeholder="أدخل اسمك" required>
+
+        <label style="color: #000000;">التخصص:</label>
+        <select name="specialty">
+            <option value="plumber">سباك</option>
+            <option value="electrician">كهربائي</option>
+            <option value="carpenter">نجار</option>
+            <option value="fan2"> فني بوتجازت</option>
+            <option value="fan2">فني غسالات</option>
+            <option value="fan2">فني ثلاجات</option>
+            <option value="other">اخر</option>
+        </select>
+
+        <label style="color: #000;">منطقة العمل (اكتب منطقتك لتحديدها على الخريطة):</label>
+        <input type="text" id="area" placeholder="مثلاً: شبرا، طنطا، فيصل..." onchange="locateWorker()">
+        
+        <input type="hidden" id="lat" name="lat">
+        <input type="hidden" id="lng" name="lng">
+
+
+        <button type="submit" style="margin-top: 20px;">إنشاء حساب فني</button>
+    </form>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    var map;
+    var marker;
+
+    async function locateWorker() {
+        var area = document.getElementById('workerArea').value;
+        if (!area) return;
+
+        try {
+            var response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${area}, Egypt`);
+            var data = await response.json();
+
+            if (data.length > 0) {
+                var lat = data[0].lat;
+                var lon = data[0].lon;
+
+                // تحديث الحقول المخفية
+                document.getElementById('lat').value = lat;
+                document.getElementById('lng').value = lon;
+
+                showWorkerMap(lat, lon);
+            }
+        } catch (e) { console.error("Error fetching location"); }
+    }
+
+    function showWorkerMap(lat, lon) {
+        document.getElementById('map').style.display = 'block';
+        if (!map) {
+            map = L.map('map').setView([lat, lon], 14);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            marker = L.marker([lat, lon], {draggable: true}).addTo(map);
+            
+            // لو الصنايعي حرك الدبوس يدوياً لتحديد بيته بالظبط
+            marker.on('dragend', function() {
+                var pos = marker.getLatLng();
+                document.getElementById('lat').value = pos.lat;
+                document.getElementById('lng').value = pos.lng;
+            });
+        } else {
+            map.setView([lat, lon], 14);
+            marker.setLatLng([lat, lon]);
+        }
+        setTimeout(() => { map.invalidateSize(); }, 200);
+    }
+</script>
+
+</body>
+</html>
 
   <div class="feedback-text">راي العملاء</div>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
@@ -246,8 +440,8 @@ id="#ContactMe"><div class="contentTitle"><h1 class="aboutName">Content</h1><h1 
     <div class="emaliandphone">
         <img src="svg/phone.svg" alt="phone logo"> <a href="https://wa.me/201068922005"></a><h3 style="color: aliceblue;"> +01068922005 للعمال او الشغل
         </h3>
-    <h3 style="color: aliceblue;">+01157586610  للعمال او طلب شكاوي </h3>
-    <h3 style="color: aliceblue;">+01002608464 للعملاء او طلب الخدمه</h3>
+    <h3 style="color: aliceblue;">+01157586610   للعمال او طلب شكاوي العملاء</h3>
+    <h3 style="color: aliceblue;">+01002608464 طلب خدمه العملاء</h3>
         <div class="SocialMedia"><a href="https://www.instagram.com/1ziiadd_/ " target="_blank"><img src="svg/instagram-2-1-logo-svgrepo-com.svg" width="50"
             alt="My instagram "></a>
         <a href="https://www.facebook.com/zied.algader/" target="_blank"><img src="svg/facebook-color-svgrepo-com.svg" width="50" 
@@ -258,7 +452,7 @@ id="#ContactMe"><div class="contentTitle"><h1 class="aboutName">Content</h1><h1 
 
 
 
-</div>
+
 
 
 

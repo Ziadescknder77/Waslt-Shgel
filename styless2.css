@@ -632,7 +632,7 @@ button:hover {
 }/* إعدادات عامة */
 .feedback-text {
     font-family: 'Cairo', sans-serif;
-    background:url(imgs/snow-mountains-3840x2160-25476.jpg) ;
+     
     margin: 0;
     direction: rtl; /* لدعم اللغة العربية */
 }
@@ -653,7 +653,7 @@ button:hover {
 .section-title {
     text-align: center;
     font-size: 32px;
-    color: #333;
+    color: #ffffff;
     margin-bottom: 10px;
 }
 
@@ -735,4 +735,78 @@ button:hover {
     .testimonial-card {
         padding: 20px;
     }
+}
+/* الأب الأساسي للكارتين */
+.container-wrapper {
+    display: flex !important;
+    flex-direction: row !important; /* خليهم في صف واحد بالعرض */
+    justify-content: center !important; /* في نص الصفحة */
+    align-items: flex-start !important; /* يبدأوا من فوق سوا */
+    gap: 30px !important; /* مسافة مريحة بينهم */
+    flex-wrap: wrap !important; /* عشان لو الشاشة صغرت ينزلوا تحت بعض */
+    width: 100% !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+}
+
+/* الكروت نفسها */
+.main-card, .worker-card {
+    flex: 1 1 400px !important; /* ياخدوا مساحة متساوية وبحد أقصى 400 بكسل */
+    max-width: 450px !important; /* عرض أقصى عشان ميبقوش كبار بزيادة */
+    min-height: auto !important; /* خليهم يطولوا حسب الكلام اللي جواهم */
+    background: #fff !important;
+    border-radius: 15px !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+    padding: 20px !important;
+    margin: 10px !important;
+    box-sizing: border-box !important;
+}
+
+/* تأكيد إن الصور والأيقونات متخرجش بره الكارت */
+ *, .worker-card * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+/* ده الأب اللي هيجبرهم يقفوا جنب بعض */
+.container-wrapper {
+    display: flex !important;
+    flex-direction: row !important; /* جنب بعض بالعرض */
+    justify-content: center !important; /* في نص الشاشة */
+    align-items: flex-start !important; /* يبدأوا من فوق سوا */
+    gap: 30px !important; /* مسافة واضحة بينهم */
+    flex-wrap: nowrap !important; /* ممنوع ينزلوا تحت بعض في الشاشات الواسعة */
+    width: 100% !important;
+}
+
+/* تعديل حجم الكروت عشان مساحة الشاشة تكفيهم سوا */
+ .worker-card {
+    flex: 0 1 450px !important; /* العرض الأقصى 450 بكسل */
+    margin: 0 !important;
+    display: inline-block !important; /* تأكيد إضافي */
+    display: flex;
+    align-self: auto;
+    align-items: center;
+}
+/* تصغير كارت التسجيل */
+.worker-card {
+    max-width: 400px !important; /* بيخلي الكارت أرفع شوية */
+    padding: 20px !important; /* بيقلل المسافات الفاضية جوه */
+    height: auto !important; /* بيخلي الكارت يقفل على قد الكلام اللي جواه */
+    margin: 10px auto !important;
+    display: flex;
+    align-items: center;
+    align-self: center;
+}
+
+/* تصغير حقول الإدخال عشان ميبقاش الكارت ضخم */
+.worker-card input, .worker-card select {
+    padding: 8px !important;
+    margin-bottom: 12px !important;
+    font-size: 14px !important;
+}
+
+/* تصغير زرار الإنشاء */
+.worker-card button {
+    padding: 10px !important;
+    font-size: 15px !important;
 }
