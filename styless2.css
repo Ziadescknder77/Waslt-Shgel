@@ -763,7 +763,7 @@ button:hover {
 }
 
 /* تأكيد إن الصور والأيقونات متخرجش بره الكارت */
- *, .worker-card * {
+.main-card *, .worker-card * {
     max-width: 100% !important;
     box-sizing: border-box !important;
 }
@@ -779,34 +779,8 @@ button:hover {
 }
 
 /* تعديل حجم الكروت عشان مساحة الشاشة تكفيهم سوا */
- .worker-card {
+.main-card, .worker-card {
     flex: 0 1 450px !important; /* العرض الأقصى 450 بكسل */
     margin: 0 !important;
     display: inline-block !important; /* تأكيد إضافي */
-    display: flex;
-    align-self: auto;
-    align-items: center;
-}
-/* تصغير كارت التسجيل */
-.worker-card {
-    max-width: 400px !important; /* بيخلي الكارت أرفع شوية */
-    padding: 20px !important; /* بيقلل المسافات الفاضية جوه */
-    height: auto !important; /* بيخلي الكارت يقفل على قد الكلام اللي جواه */
-    margin: 10px auto !important;
-    display: flex;
-    align-items: center;
-    align-self: center;
-}
-
-/* تصغير حقول الإدخال عشان ميبقاش الكارت ضخم */
-.worker-card input, .worker-card select {
-    padding: 8px !important;
-    margin-bottom: 12px !important;
-    font-size: 14px !important;
-}
-
-/* تصغير زرار الإنشاء */
-.worker-card button {
-    padding: 10px !important;
-    font-size: 15px !important;
 }
