@@ -1,465 +1,469 @@
 <!DOCTYPE html>
- <lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel= "stylesheet" href="styless2.css">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="وصلة شغل - منصة تربط أصحاب المنازل بالحرفيين والمهنيين في مصر">
+    <link rel="stylesheet" href="styless2.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>وصلة شغل | Waslt Shgel</title>
 </head>
 <body>
 
-  <header>
-      <img src="imgs/تصميم بدون عنوان.png"
-       alt=" WASLAT SHGEL" >
-       <nav class ="navigation">
+    <!-- ===== HEADER & NAVIGATION ===== -->
+    <header>
+        <img src="imgs/تصميم بدون عنوان.png" alt="وصلة شغل WASLAT SHGEL" class="logo-img">
+        
+        <!-- Hamburger Menu Button (mobile only) -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="فتح القائمة" aria-expanded="false">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
 
-     
-   <ul> 
-            <li><a href="#aboutMe">فريق العمل</a></li>
-            <li><a href="#MyWorks">اعمالي</a></li>
-            <li><a href="#feedback">راي العملاء</a></li>
-            <li><a href="#ContactMe">تواصل معنا</a></li>
-        </ul> 
-    </nav> 
-   
-      
-  </header>
+        <nav class="navigation" id="mainNav">
+            <ul>
+                <li><a href="#aboutMe">فريق العمل</a></li>
+                <li><a href="#MyWorks">اعمالنا</a></li>
+                <li><a href="#feedback">راي العملاء</a></li>
+                <li><a href="#ContactMe">تواصل معنا</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<hr/>
-<section class="hero">
-  <img src=svg/arrow.svg alt="arrow">
-  <div class="herosub">
-    <h1 class="name"> Ziad</h1>
-    <h1 class="name"> Ahmed</h1>
-    <h1 class="name"> AlBraa</h1>
-    <h1 class="Title">  يلا نشتغل</h1>
-    <div class="heroBtns">
-<a class="hireMe" href="https://wa.me/201068922005">شغلني</a>
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="name">Ziad</h1>
+            <h1 class="name">Ahmed</h1>
+            <h1 class="name">AlBraa</h1>
+            <h1 class="name">Youssef</h1>
+            <h2 class="hero-title">يلا نشتغل</h2>
+            <a class="hireMe" href="https://wa.me/201068922005">شغلني</a>
+        </div>
+    </section>
 
-        <section class="service-request">
-    <div class="request-container">
-        <h2 style="color: aliceblue;">اطلبي صنيعي (سباك، نجار، كهربائي)</h2>
-        <p style="color: aliceblue;">اكتبي طلبك وهنوصلك بأقرب حد ليكِ</p>
+    <!-- ===== SERVICE REQUEST FORM ===== -->
+    <section class="service-request" id="serviceRequest">
+        <div class="request-container">
+            <h2 class="form-heading">اطلبي صنيعي (سباك، نجار، كهربائي)</h2>
+            <p class="form-subheading">اكتبي طلبك وهنوصلك بأقرب حد ليكِ</p>
 
-        <form class="order-form">
-            <div class="form-group">
-                <label style="color: #ffffff;" for="worker-type">محتاجة مين؟</label>
-                <select id="worker-type" name="worker" class="input-field">
-                    <option value="plumber">سباك</option>
-                    <option value="carpenter">نجار</option>
-                    <option value="electrician">كهربائي</option>
-                    <option value="painter">نقاش</option>
-                    <option value="humuns work in home">عماله منزليه</option>
-                    <option value="fan2">فني غسالات</option>
-                    <option value="fan2">فني بوتجازت</option>
-                    <option value="fan2">فني تكيفات</option>
-                    <option value="other">اخر</option>
-                </select>
-            </div>
+            <form class="order-form" id="serviceForm">
+                <div class="form-group">
+                    <label for="worker-type">محتاجة مين؟</label>
+                    <select id="worker-type" name="worker" class="input-field">
+                        <option value="سباك">سباك</option>
+                        <option value="نجار">نجار</option>
+                        <option value="كهربائي">كهربائي</option>
+                        <option value="نقاش">نقاش</option>
+                        <option value="عماله منزليه">عماله منزليه</option>
+                        <option value="فني غسالات">فني غسالات</option>
+                        <option value="فني بوتجازت">فني بوتجازت</option>
+                        <option value="فني تكيفات">فني تكيفات</option>
+                        <option value="اخر">اخر</option>
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label style="color: #ffffff;" for="details" >إيه المشكلة اللي عندك؟</label>
-                <textarea id="details" placeholder="مثلاً: الحنفية بتنقط، أو عايزة أركب نجفة..." required="input-field"></textarea>
-            </div>
+                <div class="form-group">
+                    <label for="service-details">إيه المشكلة اللي عندك؟</label>
+                    <textarea id="service-details" placeholder="مثلاً: الحنفية بتنقط، أو عايزة أركب نجفة..." class="input-field"></textarea>
+                </div>
 
-            <div class="form-group">
-                <label style="color: aliceblue;" for="phone" required>رقم موبايلك للتواصل</label>
-                <input type="tel" id="phone" placeholder="01xxxxxxxxx" required class="input-field">
-            </div>
+                <div class="form-group">
+                    <label for="phone">رقم موبايلك للتواصل</label>
+                    <input type="tel" id="phone" placeholder="01xxxxxxxxx" required class="input-field">
+                </div>
 
-            <button type="button" onclick="sendToWhatsApp()" class="send-request-btn">إرسال الطلب الآن</button>
+                <button type="button" onclick="sendServiceToWhatsApp()" class="submit-btn">إرسال الطلب الآن</button>
+            </form>
+        </div>
+    </section>
 
-<script>
-function sendToWhatsApp() {
-    // سحب البيانات
-    const worker = document.getElementById('worker-type').value;
-    const details = document.getElementById('details').value;
-    const phone = document.getElementById('phone').value;
+    <!-- ===== WORKER APPLICATION FORM ===== -->
+    <section class="worker-section">
+        <div class="SHGEL">
+            <form id="workerForm" onsubmit="sendWorkerToWhatsApp(); return false;">
+                <h2 class="form-heading">شوف انت عايز تشتغل ايه و احنا نحبهلك لغايه عندك</h2>
+                <div class="form-group">
+                    <label for="worker-name">اسمك</label>
+                    <input type="text" id="worker-name" placeholder="اسمك" required>
+                </div>
+                <div class="form-group">
+                    <label for="worker-job">نوع الشغل</label>
+                    <input type="text" id="worker-job" placeholder="نوع الشغل" required>
+                </div>
+                <div class="form-group">
+                    <label for="worker-details">تفاصيل الطلب</label>
+                    <textarea id="worker-details" placeholder="تفاصيل الطلب" required></textarea>
+                </div>
+                <button type="submit">قدم على الشغل اللي عاوزه</button>
+            </form>
+        </div>
+    </section>
 
-    // تجهيز الرسالة (تأكد من استخدام علامة ` )
-    const message = `طلب خدمة جديد:%0A- المهنة: ${worker}%0A- التفاصيل: ${details}%0A- رقم العميل: ${phone}`;
-    
-    const myNumber = "201157586610";
-    
-    // فتح الرابط
-    window.open(`https://wa.me/${myNumber}?text=${message}`, '_blank');
-}
-</script>
-
-        </form>
-    </div>
-</section>
-       
-            
-            
-            <div class="SHGEL">
-                <form onsubmit="sendToWhatsApp(); return false;">
-                    <h2 style="color: aliceblue;">شوف انت عايز تشتغل ايه و احنا نحبهلك لغايه عندك</h2>
-                    <input type="text" id="name" placeholder="اسمك" required>
-                    <input type="text" id="job" placeholder="نوع الشغل" required>
-                    <textarea id="details" placeholder="تفاصيل الطلب" required></textarea>
-                    <button type="submit">قدم على الشغل اللي عاوزه</button>
-                </form>
+    <!-- ===== MAP & SEARCH SECTION ===== -->
+    <section class="map-section">
+        <div class="search-container">
+            <h2 class="map-heading">ابحث عن أقرب فني في منطقتك</h2>
+            <div class="search-box">
+                <input type="text" id="areaInput" placeholder="اكتب منطقتك (مثلاً: المعادي)">
+                <button onclick="searchArea()">بحث على الخريطة</button>
             </div>
         </div>
-    </div>
-</section>
+        <div id="map"></div>
+    </section>
 
-<script>
-function sendToWhatsApp() {
-    // سحب البيانات من الحقول
-    let name = document.getElementById("name").value;
-    let job = document.getElementById("job").value;
-    let details = document.getElementById("details").value;
-    
-    let phone = "201068922005"; // رقمك بدون علامة +
-    
-    // تجهيز نص الرسالة (استخدمنا Backticks هنا)
-    let message = `اسم العميل: ${name}%0Aنوع الشغل: ${job}%0Aالتفاصيل: ${details}`;
-    
-    // إنشاء الرابط
-    let url = `https://wa.me/${phone}?text=${message}`;
-    
-    // فتح الرابط في نافذة جديدة
-    window.open(url, "_blank");
-}
-</script>
-  
+    <!-- ===== WORKER REGISTRATION ===== -->
+    <section class="worker-registration">
+        <div class="worker-card">
+            <h2 class="form-heading">سجل كفني في وصلة شغل</h2>
+            <form id="registrationForm" onsubmit="handleWorkerRegistration(event)">
+                <div class="form-group">
+                    <label for="reg-name">الاسم بالكامل:</label>
+                    <input type="text" id="reg-name" name="full_name" placeholder="أدخل اسمك" required>
+                </div>
 
+                <div class="form-group">
+                    <label for="reg-specialty">التخصص:</label>
+                    <select id="reg-specialty" name="specialty">
+                        <option value="سباك">سباك</option>
+                        <option value="كهربائي">كهربائي</option>
+                        <option value="نجار">نجار</option>
+                        <option value="فني بوتجازت">فني بوتجازت</option>
+                        <option value="فني غسالات">فني غسالات</option>
+                        <option value="فني ثلاجات">فني ثلاجات</option>
+                        <option value="اخر">اخر</option>
+                    </select>
+                </div>
 
+                <div class="form-group">
+                    <label for="reg-area">منطقة العمل (اكتب منطقتك لتحديدها على الخريطة):</label>
+                    <input type="text" id="reg-area" placeholder="مثلاً: شبرا، طنطا، فيصل..." onchange="locateWorker()">
+                </div>
 
-    </div>
-  </div>
- 
-</section>
+                <input type="hidden" id="lat" name="lat">
+                <input type="hidden" id="lng" name="lng">
 
+                <button type="submit">إنشاء حساب فني</button>
+            </form>
+        </div>
+    </section>
 
-
-
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وصلة شغل | بحث ذكي</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
-    <style>
-        body {
-            margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif;
-            background-size: cover; background-attachment: fixed;
-            display: flex; justify-content: center; align-items: center; min-height: 100vh;
-        }
-        .main-card {
-            background: white; padding: 40px 20px; border-radius: 20px;
-            width: 90%; max-width: 600px; text-align: center; box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-        }
-        input[type="text"] {
-            width: 100%; padding: 18px; font-size: 22px; border: 3px solid #ffffff;
-            border-radius: 12px; margin-bottom: 15px; text-align: center; font-weight: bold;
-            color: #000;
-        }
-        button {
-            width: 100%; padding: 18px; background: #27ae60; color: white;
-            border: none; border-radius: 12px; font-size: 20px; cursor: pointer; font-weight: bold;
-        }
-        #results-container { display: none; margin-top: 25px; }
-        #map { height: 350px; width: 100%; border-radius: 15px; border: 1px solid #000000; }
-        .loading { color: #f39c12; font-weight: bold; display: none; margin-top: 10px; }
-    </style>
-</head>
-
-
-
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>خريطة فنيين وصلة شغل</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <style>
-        body { font-family: sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }
-        .search-container { margin-bottom: 20px; text-align: center; }
-        input { padding: 10px; width: 250px; border-radius: 5px; border: 1px solid #ccc; }
-        button { padding: 10px 20px; background: #00bcd4; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        #map { height: 500px; width: 100%; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    </style>
-</head>
-<body>
-
-    <div class="search-container">
-        <h2 style="color: #000000;">ابحث عن أقرب فني في منطقتك 🛠️</h2>
-        <input type="text" id="areaInput" placeholder="اكتب منطقتك (مثلاً: المعادي)">
-        <button onclick="searchArea()">بحث على الخريطة</button>
-    </div>
-    
-
-    <div id="map"></div>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        // 1. تشغيل الخريطة (بداية من القاهرة)
-        var map = L.map('map').setView([30.0444, 31.2357], 12);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap'
-        }).addTo(map);
-
-        // 2. داتا وهمية للفنيين (المفروض دي تيجي من عندك)
-        const technicians = [
-            { name: "أحمد السباك", lat: 30.0444, lng: 31.2357, job: "سباك" },
-            { name: "محمود الكهربائي", lat: 29.9602, lng: 31.2569, job: "كهربائي" },
-            { name: "إبراهيم نجار", lat: 30.0771, lng: 31.2859, job: "نجار" }
-        ];
-
-        // إضافة الفنيين للخريطة
-        technicians.forEach(tech => {
-            L.marker([tech.lat, tech.lng]).addTo(map)
-                .bindPopup(`<b>${tech.name}</b><br>التخصص: ${tech.job}`);
-        });
-
-        // 3. وظيفة البحث وتحريك الخريطة
-        async function searchArea() {
-            const area = document.getElementById('areaInput').value;
-            if (!area) return alert("من فضلك اكتب اسم المنطقة");
-
-            // استخدام خدمة مجانية لتحويل الاسم لإحداثيات (Nominatim)
-            const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${area}`);
-            const data = await response.json();
-
-            if (data.length > 0) {
-                const lat = data[0].lat;
-                const lon = data[0].lon;
-                
-                // تحريك الخريطة للمكان الجديد
-                map.setView([lat, lon], 14);
-                
-                // وضع علامة لمكان العميل
-                L.circle([lat, lon], { color: 'red', radius: 500 }).addTo(map)
-                    .bindPopup("موقعك الحالي").openPopup();
-            } else {
-                alert("لم نجد هذه المنطقة، حاول مرة أخرى");
-            }
-        }
-        
-    </script>
-</body>
-</html>
-
-<div class="worker-card">
-    <h2>سجل كفني في وصلة شغل 👷‍♂️</h2>
-    
-
-    
-    <form action="insert.php" method="POST">
-        <label style="color: #000000;">الاسم بالكامل:</label>
-        <input type="text" name="full_name" placeholder="أدخل اسمك" required>
-
-        <label style="color: #000000;">التخصص:</label>
-        <select name="specialty">
-            <option value="plumber">سباك</option>
-            <option value="electrician">كهربائي</option>
-            <option value="carpenter">نجار</option>
-            <option value="fan2"> فني بوتجازت</option>
-            <option value="fan2">فني غسالات</option>
-            <option value="fan2">فني ثلاجات</option>
-            <option value="other">اخر</option>
-        </select>
-
-        <label style="color: #000;">منطقة العمل (اكتب منطقتك لتحديدها على الخريطة):</label>
-        <input type="text" id="area" placeholder="مثلاً: شبرا، طنطا، فيصل..." onchange="locateWorker()">
-        
-        <input type="hidden" id="lat" name="lat">
-        <input type="hidden" id="lng" name="lng">
-
-
-        <button type="submit" style="margin-top: 20px;">إنشاء حساب فني</button>
-    </form>
-</div>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<script>
-    var map;
-    var marker;
-
-    async function locateWorker() {
-        var area = document.getElementById('workerArea').value;
-        if (!area) return;
-
-        try {
-            var response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${area}, Egypt`);
-            var data = await response.json();
-
-            if (data.length > 0) {
-                var lat = data[0].lat;
-                var lon = data[0].lon;
-
-                // تحديث الحقول المخفية
-                document.getElementById('lat').value = lat;
-                document.getElementById('lng').value = lon;
-
-                showWorkerMap(lat, lon);
-            }
-        } catch (e) { console.error("Error fetching location"); }
-    }
-
-    function showWorkerMap(lat, lon) {
-        document.getElementById('map').style.display = 'block';
-        if (!map) {
-            map = L.map('map').setView([lat, lon], 14);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-            marker = L.marker([lat, lon], {draggable: true}).addTo(map);
-            
-            // لو الصنايعي حرك الدبوس يدوياً لتحديد بيته بالظبط
-            marker.on('dragend', function() {
-                var pos = marker.getLatLng();
-                document.getElementById('lat').value = pos.lat;
-                document.getElementById('lng').value = pos.lng;
-            });
-        } else {
-            map.setView([lat, lon], 14);
-            marker.setLatLng([lat, lon]);
-        }
-        setTimeout(() => { map.invalidateSize(); }, 200);
-    }
-</script>
-
-</body>
-</html>
-
-  <div class="feedback-text">راي العملاء</div>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    
-    
-
-
-
-    <section class="testimonials-section">
+    <!-- ===== TESTIMONIALS SECTION ===== -->
+    <section class="testimonials-section" id="feedback">
         <div class="container">
             <h2 class="section-title">قالوا عنا</h2>
             <p class="section-subtitle">آراء حقيقية من عملاء جربوا خدماتنا ونفتخر بثقتهم.</p>
             
             <div class="testimonials-grid">
-                
                 <div class="testimonial-card">
                     <div class="client-info">
-                        
                         <div>
                             <h3>أحمد محمود</h3>
                             <p>صاحب ورشة نجارة</p>
                         </div>
                     </div>
-                    <div class="rating">⭐⭐⭐⭐</div>
+                    <div class="rating">&#11088;&#11088;&#11088;&#11088;</div>
                     <p class="feedback-text">"الموقع ده غير طريقتي في الشغل خالص! قدرت أوصل لفنيين نجارين محترفين في وقت قياسي وبجودة ممتازة. الخدمة سريعة والدعم الفني متعاون جداً."</p>
                 </div>
 
                 <div class="testimonial-card">
                     <div class="client-info">
-                        
                         <div>
                             <h3>سارة حسن</h3>
                             <p>مديرة مطعم</p>
                         </div>
                     </div>
-                    <div class="rating">⭐⭐⭐⭐</div>
+                    <div class="rating">&#11088;&#11088;&#11088;&#11088;</div>
                     <p class="feedback-text">"جربت الموقع عشان ألاقي شيف محترف لمطعمي، وبصراحة التجربة كانت فوق التوقعات. النظام سهل وبسيط وقدرت أقارن بين السير الذاتية بسهولة."</p>
                 </div>
 
                 <div class="testimonial-card">
                     <div class="client-info">
-                        
                         <div>
                             <h3>خالد علي</h3>
                             <p>مهندس صيانة</p>
                         </div>
                     </div>
-                    <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <div class="rating">&#11088;&#11088;&#11088;&#11088;&#11088;</div>
                     <p class="feedback-text">"كفني صيانة، الموقع وفرلي فرص شغل كتير مكنتش بقدر أوصلها لوحدي. التقييمات الحقيقية خلت العملاء يثقوا فيا ويطلبوا شغلي باستمرار."</p>
                 </div>
-
             </div>
         </div>
     </section>
 
+    <!-- ===== ABOUT / TEAM SECTION ===== -->
+    <section class="aboutMe" id="aboutMe">
+        <div class="text container">
+            <div class="textTitle">
+                <h1 class="aboutName">About</h1>
+                <h1 class="aboutTitle">Me</h1>
+                <img src="svg/lightbulb.svg" alt="lightbulb" class="light">
+            </div>
+            <p class="aboutMePar">كل شيء بدأ بصدقة...
 
-
-<section class="aboutMe"  id="aboutMe"  >
-
-    <img
-    src="svg/AboutMe.svg"
-    alt="aboutMe image"
-    class="aboutMeimg"
-    />
-    <div class="text container"><div class="textTitle">
-        <h1 class="aboutName">About</h1>
-        <h1 class="aboutTitle">Me</h1>
-        <img src="svg/lightbulb.svg" alt="ligh"
-        class="light">
-    </div>
-    <p class="aboutMePar">كل شيء بدأ بصداقة…
-
-نحن ثلاثه
-  أصدقاء عرفنا بعضنا منذ أيام المدرسة الابتدائية. كبرنا معًا، وتشاركنا الكثير من اللحظات والتجارب.
+نحن اربعة أصدقاء عرفنا بعضنا منذ أيام المدرسة الابتدائية. كبرنا معًا، وتشاركنا الكثير من اللحظات والتجارب.
 
 ومع مرور الوقت لم تعد صداقتنا مجرد ذكريات، بل تحولت إلى فكرة. فكرة أن نصنع شيئًا يجمعنا ويعبر عنا.
 
-بدأنا التفكير، تبادلنا الآراء، واجتمعنا حول هدف واحد:
-أن نحول أفكارنا إلى مشروع حقيقي.
+بدأنا التفكير، تبادلنا الآراء، واجتمعنا حول هدف واحد: أن نحول أفكارنا إلى مشروع حقيقي.
 
 اليوم نحن فريق واحد يجمع بين الصداقة، الشغف، والعمل.
 
-أحمد ,  براء  , زياد</p> 
-    </div>
-</section>
-<section class="works"  id="MyWorks">
-    <div class="workscontainer">
-        <div class="projectTitle"><h1 class="aboutMe">My Recent works</h1>
+أحمد, يوسف , براء , زياد</p>
+        </div>
+        <img src="svg/AboutMe.svg" alt="aboutMe image" class="aboutMeimg">
+    </section>
+
+    <!-- ===== WORKS / PORTFOLIO SECTION ===== -->
+    <section class="works" id="MyWorks">
+        <div class="workscontainer">
+            <div class="projectTitle">
+                <h1>My Recent Works</h1>
+            </div>
+            <ul class="works-grid">
+                <li>
+                    <a href="" target="_blank">
+                        <img src="imgs/istockphoto-1061173208-1024x1024.jpg" alt="نجار">
+                    </a>
+                </li>
+                <li>
+                    <a href="" target="_blank">
+                        <img src="imgs/istockphoto-1161937292-1024x1024.jpg" alt="صنايعني">
+                    </a>
+                </li>
+                <li>
+                    <a href="" target="_blank">
+                        <img src="imgs/istockphoto-2156908250-1024x1024.jpg" alt="حداد">
+                    </a>
+                </li>
+                <li>
+                    <a href="" target="_blank">
+                        <img src="imgs/681d6cf257560d18ba1109b3db2eaacc.jpg" alt="شبك">
+                    </a>
+                </li>
+                <li>
+                    <a href="" target="_blank">
+                        <img src="imgs/3923dacfe3a0efb0880c44ee760b182e.jpg" alt="ميكانيكي">
+                    </a>
+                </li>
+                <li>
+                    <a href="" target="_blank">
+                        <img src="imgs/1e333d1dc2fb63365f2d48dc5dcf36c0.jpg" alt="سباك">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT SECTION ===== -->
+    <section class="contact" id="ContactMe">
+        <div class="contact-inner">
+            <div class="contentTitle">
+                <h1 class="aboutName">Contact</h1>
+                <h1 class="aboutTitle">Me</h1>
+            </div>
+            <div class="contact-info">
+                <div class="emaliandphone">
+                    <div class="contact-item">
+                        <img src="svg/phone.svg" alt="email logo">
+                        <a href="mailto:zied.escknder100@gmail.com">
+                            <h3>zied.escknder100@gmail.com</h3>
+                        </a>
+                    </div>
+                    <div class="contact-item">
+                        <img src="svg/phone.svg" alt="phone logo">
+                        <div class="phone-numbers">
+                            <h3>+01068922005 للعمال او الشغل</h3>
+                            <h3>+01157586610 للعمال او طلب شكاوي العملاء</h3>
+                            <h3>+01002608464 طلب خدمه العملاء</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="socialMedia">
+                    <a href="https://www.instagram.com/1ziiadd_/" target="_blank" aria-label="Instagram">
+                        <img src="svg/instagram-2-1-logo-svgrepo-com.svg" alt="Instagram">
+                    </a>
+                    <a href="https://www.facebook.com/zied.algader/" target="_blank" aria-label="Facebook">
+                        <img src="svg/facebook-color-svgrepo-com.svg" alt="Facebook">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p>built by ZiadM</p>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+    // ===== HAMBURGER MENU =====
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mainNav = document.getElementById('mainNav');
+
+    hamburgerBtn.addEventListener('click', function() {
+        const isOpen = mainNav.classList.toggle('nav-open');
+        hamburgerBtn.classList.toggle('active');
+        hamburgerBtn.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close menu when a link is clicked
+    mainNav.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            mainNav.classList.remove('nav-open');
+            hamburgerBtn.classList.remove('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+        });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!mainNav.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+            mainNav.classList.remove('nav-open');
+            hamburgerBtn.classList.remove('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    // ===== SERVICE REQUEST WHATSAPP =====
+    function sendServiceToWhatsApp() {
+        const worker = document.getElementById('worker-type').value;
+        const details = document.getElementById('service-details').value;
+        const phone = document.getElementById('phone').value;
+
+        if (!phone) {
+            alert('من فضلك ادخل رقم الموبايل');
+            return;
+        }
+
+        const message = encodeURIComponent(
+            'طلب خدمة جديد:\n- المهنة: ' + worker + '\n- التفاصيل: ' + details + '\n- رقم العميل: ' + phone
+        );
         
-    </div>
-    <ul>
-        <li><a href="" target="_blank"><img src="imgs/istockphoto-1061173208-1024x1024.jpg"  width="500"    alt="نجار">
-        </a>
-    </li>
-    <li><a href=""target="_blank"><img src="imgs/istockphoto-1161937292-1024x1024.jpg" width="500" alt="صنايعني"></a>
-    </li>
-    <li><a href=""target="_blank"><img src="imgs/istockphoto-2156908250-1024x1024.jpg" width="500" alt="حداد"></a></li>
-   <li><a href="" target="_blank"><img src="imgs/681d6cf257560d18ba1109b3db2eaacc.jpg"  width="500"    alt="شبف">
-        </a>
-    </li>
-    <li><a href=""target="_blank"><img src="imgs/3923dacfe3a0efb0880c44ee760b182e.jpg" width="500" alt="ميكاميكي"></a>
-    </li>
-    <li><a href=""target="_blank"><img src="imgs/1e333d1dc2fb63365f2d48dc5dcf36c0.jpg" width="500" alt="سباك"></a></li> </ul>
-    </div>
-    
-</section>
-<section class="contact"
-id="#ContactMe"><div class="contentTitle"><h1 class="aboutName">Content</h1><h1 class="aboutTitle">Me</h1>
-<div class="Contact"><div class="emaliandphone">
-    <img src="svg/phone.svg" alt="emali logo">
-    <a href="emalil:zied.escknder100@gmail.com"><h3>zied.escknder100@gmail.com</h3></a>
-    <div class="emaliandphone">
-        <img src="svg/phone.svg" alt="phone logo"> <a href="https://wa.me/201068922005"></a><h3 style="color: aliceblue;"> +01068922005 للعمال او الشغل
-        </h3>
-    <h3 style="color: aliceblue;">+01157586610   للعمال او طلب شكاوي العملاء</h3>
-    <h3 style="color: aliceblue;">+01002608464 طلب خدمه العملاء</h3>
-        <div class="SocialMedia"><a href="https://www.instagram.com/1ziiadd_/ " target="_blank"><img src="svg/instagram-2-1-logo-svgrepo-com.svg" width="50"
-            alt="My instagram "></a>
-        <a href="https://www.facebook.com/zied.algader/" target="_blank"><img src="svg/facebook-color-svgrepo-com.svg" width="50" 
-            alt=" My facebook "></a></div>
-    </div>
-</div></div>
+        window.open('https://wa.me/201157586610?text=' + message, '_blank');
+    }
 
+    // ===== WORKER APPLICATION WHATSAPP =====
+    function sendWorkerToWhatsApp() {
+        const name = document.getElementById('worker-name').value;
+        const job = document.getElementById('worker-job').value;
+        const details = document.getElementById('worker-details').value;
 
+        if (!name || !job) {
+            alert('من فضلك املا البيانات');
+            return;
+        }
 
+        const message = encodeURIComponent(
+            'اسم العميل: ' + name + '\nنوع الشغل: ' + job + '\nالتفاصيل: ' + details
+        );
+        
+        window.open('https://wa.me/201068922005?text=' + message, '_blank');
+    }
 
+    // ===== WORKER REGISTRATION =====
+    function handleWorkerRegistration(e) {
+        e.preventDefault();
+        alert('شكراً لتسجيلك! هيتم التواصل معك قريباً');
+    }
 
+    // ===== INTERACTIVE MAP =====
+    var map = L.map('map').setView([30.0444, 31.2357], 12);
 
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
 
+    var technicians = [
+        { name: "أحمد السباك", lat: 30.0444, lng: 31.2357, job: "سباك" },
+        { name: "محمود الكهربائي", lat: 29.9602, lng: 31.2569, job: "كهربائي" },
+        { name: "إبراهيم نجار", lat: 30.0771, lng: 31.2859, job: "نجار" }
+    ];
 
+    technicians.forEach(function(tech) {
+        L.marker([tech.lat, tech.lng]).addTo(map)
+            .bindPopup('<b>' + tech.name + '</b><br>التخصص: ' + tech.job);
+    });
 
-</section>
-<hr>
-<footer><p>bulit by ZiadM</p></footer>
+    async function searchArea() {
+        var area = document.getElementById('areaInput').value;
+        if (!area) { alert("من فضلك اكتب اسم المنطقة"); return; }
+
+        try {
+            var response = await fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(area));
+            var data = await response.json();
+
+            if (data.length > 0) {
+                var lat = parseFloat(data[0].lat);
+                var lon = parseFloat(data[0].lon);
+                
+                map.setView([lat, lon], 14);
+                L.circle([lat, lon], { color: 'red', radius: 500 }).addTo(map)
+                    .bindPopup("موقعك الحالي").openPopup();
+            } else {
+                alert("لم نجد هذه المنطقة، حاول مرة أخرى");
+            }
+        } catch (e) {
+            alert("حدث خطأ في البحث، حاول مرة أخرى");
+        }
+    }
+
+    // ===== WORKER LOCATION MAP =====
+    var workerMap, workerMarker;
+
+    async function locateWorker() {
+        var area = document.getElementById('reg-area').value;
+        if (!area) return;
+
+        try {
+            var response = await fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(area) + ', Egypt');
+            var data = await response.json();
+
+            if (data.length > 0) {
+                var lat = parseFloat(data[0].lat);
+                var lon = parseFloat(data[0].lon);
+
+                document.getElementById('lat').value = lat;
+                document.getElementById('lng').value = lon;
+
+                if (!workerMap) {
+                    // Create a temporary map display
+                    var mapDiv = document.createElement('div');
+                    mapDiv.id = 'workerMap';
+                    mapDiv.style.cssText = 'height:250px;width:100%;border-radius:12px;margin-top:15px;border:1px solid #ccc;';
+                    document.getElementById('registrationForm').appendChild(mapDiv);
+
+                    workerMap = L.map('workerMap').setView([lat, lon], 14);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(workerMap);
+                    workerMarker = L.marker([lat, lon], {draggable: true}).addTo(workerMap);
+                    
+                    workerMarker.on('dragend', function() {
+                        var pos = workerMarker.getLatLng();
+                        document.getElementById('lat').value = pos.lat;
+                        document.getElementById('lng').value = pos.lng;
+                    });
+                } else {
+                    workerMap.setView([lat, lon], 14);
+                    workerMarker.setLatLng([lat, lon]);
+                }
+                setTimeout(function() { workerMap.invalidateSize(); }, 300);
+            }
+        } catch (e) {
+            console.error("Error fetching location");
+        }
+    }
+
+    // Fix map size after page load (Leaflet bug)
+    window.addEventListener('load', function() {
+        setTimeout(function() { map.invalidateSize(); }, 300);
+    });
+    </script>
+
 </body>
 </html>
