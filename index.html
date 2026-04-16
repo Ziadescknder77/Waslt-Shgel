@@ -8,20 +8,46 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <title>وصلة شغل | Waslt Shgel</title>
+    <style>
+        /* ===== CANVAS & BACKGROUND FIXES ===== */
+        canvas#premiumBg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            user-select: none;
+            z-index: -2;
+        }
+        .testimonials-section {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+        }
+        #testimonialsBg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            user-select: none;
+            z-index: -1;
+        }
+        /* Prevent layout shift during canvas init */
+        .testimonials-section > .container { position: relative; z-index: 1; }
+    </style>
 </head>
 <body>
+
+    <!-- ===== MAIN INTERACTIVE BACKGROUND ===== -->
+    <canvas id="premiumBg"></canvas>
 
     <!-- ===== HEADER & NAVIGATION ===== -->
     <header>
         <img src="imgs/تصميم بدون عنوان.png" alt="وصلة شغل WASLAT SHGEL" class="logo-img">
-        
-        <!-- Hamburger Menu Button (mobile only) -->
         <button class="hamburger" id="hamburgerBtn" aria-label="فتح القائمة" aria-expanded="false">
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
         </button>
-
         <nav class="navigation" id="mainNav">
             <ul>
                 <li><a href="#aboutMe">فريق العمل</a></li>
@@ -43,13 +69,12 @@
             <a class="hireMe" href="https://wa.me/201068922005">شغلني</a>
         </div>
     </section>
-
+    
     <!-- ===== SERVICE REQUEST FORM ===== -->
     <section class="service-request" id="serviceRequest">
         <div class="request-container">
             <h2 class="form-heading">اطلبي صنيعي (سباك، نجار، كهربائي)</h2>
             <p class="form-subheading">اكتبي طلبك وهنوصلك بأقرب حد ليكِ</p>
-
             <form class="order-form" id="serviceForm">
                 <div class="form-group">
                     <label for="worker-type">محتاجة مين؟</label>
@@ -65,17 +90,14 @@
                         <option value="اخر">اخر</option>
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label for="service-details">إيه المشكلة اللي عندك؟</label>
                     <textarea id="service-details" placeholder="مثلاً: الحنفية بتنقط، أو عايزة أركب نجفة..." class="input-field"></textarea>
                 </div>
-
                 <div class="form-group">
                     <label for="phone">رقم موبايلك للتواصل</label>
                     <input type="tel" id="phone" placeholder="01xxxxxxxxx" required class="input-field">
                 </div>
-
                 <button type="button" onclick="sendServiceToWhatsApp()" class="submit-btn">إرسال الطلب الآن</button>
             </form>
         </div>
@@ -124,7 +146,6 @@
                     <label for="reg-name">الاسم بالكامل:</label>
                     <input type="text" id="reg-name" name="full_name" placeholder="أدخل اسمك" required>
                 </div>
-
                 <div class="form-group">
                     <label for="reg-specialty">التخصص:</label>
                     <select id="reg-specialty" name="specialty">
@@ -137,26 +158,23 @@
                         <option value="اخر">اخر</option>
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label for="reg-area">منطقة العمل (اكتب منطقتك لتحديدها على الخريطة):</label>
                     <input type="text" id="reg-area" placeholder="مثلاً: شبرا، طنطا، فيصل..." onchange="locateWorker()">
                 </div>
-
                 <input type="hidden" id="lat" name="lat">
                 <input type="hidden" id="lng" name="lng">
-
                 <button type="submit">إنشاء حساب فني</button>
             </form>
         </div>
     </section>
 
-    <!-- ===== TESTIMONIALS SECTION ===== -->
+    <!-- ===== TESTIMONIALS SECTION (with background canvas INSIDE) ===== -->
     <section class="testimonials-section" id="feedback">
+        <canvas id="testimonialsBg"></canvas>
         <div class="container">
             <h2 class="section-title">قالوا عنا</h2>
             <p class="section-subtitle">آراء حقيقية من عملاء جربوا خدماتنا ونفتخر بثقتهم.</p>
-            
             <div class="testimonials-grid">
                 <div class="testimonial-card">
                     <div class="client-info">
@@ -168,7 +186,6 @@
                     <div class="rating">&#11088;&#11088;&#11088;&#11088;</div>
                     <p class="feedback-text">"الموقع ده غير طريقتي في الشغل خالص! قدرت أوصل لفنيين نجارين محترفين في وقت قياسي وبجودة ممتازة. الخدمة سريعة والدعم الفني متعاون جداً."</p>
                 </div>
-
                 <div class="testimonial-card">
                     <div class="client-info">
                         <div>
@@ -179,7 +196,6 @@
                     <div class="rating">&#11088;&#11088;&#11088;&#11088;</div>
                     <p class="feedback-text">"جربت الموقع عشان ألاقي شيف محترف لمطعمي، وبصراحة التجربة كانت فوق التوقعات. النظام سهل وبسيط وقدرت أقارن بين السير الذاتية بسهولة."</p>
                 </div>
-
                 <div class="testimonial-card">
                     <div class="client-info">
                         <div>
@@ -224,36 +240,12 @@
                 <h1>My Recent Works</h1>
             </div>
             <ul class="works-grid">
-                <li>
-                    <a href="" target="_blank">
-                        <img src="imgs/istockphoto-1061173208-1024x1024.jpg" alt="نجار">
-                    </a>
-                </li>
-                <li>
-                    <a href="" target="_blank">
-                        <img src="imgs/istockphoto-1161937292-1024x1024.jpg" alt="صنايعني">
-                    </a>
-                </li>
-                <li>
-                    <a href="" target="_blank">
-                        <img src="imgs/istockphoto-2156908250-1024x1024.jpg" alt="حداد">
-                    </a>
-                </li>
-                <li>
-                    <a href="" target="_blank">
-                        <img src="imgs/681d6cf257560d18ba1109b3db2eaacc.jpg" alt="شبك">
-                    </a>
-                </li>
-                <li>
-                    <a href="" target="_blank">
-                        <img src="imgs/3923dacfe3a0efb0880c44ee760b182e.jpg" alt="ميكانيكي">
-                    </a>
-                </li>
-                <li>
-                    <a href="" target="_blank">
-                        <img src="imgs/1e333d1dc2fb63365f2d48dc5dcf36c0.jpg" alt="سباك">
-                    </a>
-                </li>
+                <li><a href="" target="_blank"><img src="imgs/istockphoto-1061173208-1024x1024.jpg" alt="نجار"></a></li>
+                <li><a href="" target="_blank"><img src="imgs/istockphoto-1161937292-1024x1024.jpg" alt="صنايعني"></a></li>
+                <li><a href="" target="_blank"><img src="imgs/istockphoto-2156908250-1024x1024.jpg" alt="حداد"></a></li>
+                <li><a href="" target="_blank"><img src="imgs/681d6cf257560d18ba1109b3db2eaacc.jpg" alt="شبك"></a></li>
+                <li><a href="" target="_blank"><img src="imgs/3923dacfe3a0efb0880c44ee760b182e.jpg" alt="ميكانيكي"></a></li>
+                <li><a href="" target="_blank"><img src="imgs/1e333d1dc2fb63365f2d48dc5dcf36c0.jpg" alt="سباك"></a></li>
             </ul>
         </div>
     </section>
@@ -269,9 +261,7 @@
                 <div class="emaliandphone">
                     <div class="contact-item">
                         <img src="svg/phone.svg" alt="email logo">
-                        <a href="mailto:zied.escknder100@gmail.com">
-                            <h3>zied.escknder100@gmail.com</h3>
-                        </a>
+                        <a href="mailto:zied.escknder100@gmail.com"><h3>zied.escknder100@gmail.com</h3></a>
                     </div>
                     <div class="contact-item">
                         <img src="svg/phone.svg" alt="phone logo">
@@ -283,46 +273,451 @@
                     </div>
                 </div>
                 <div class="socialMedia">
-                    <a href="https://www.instagram.com/1ziiadd_/" target="_blank" aria-label="Instagram">
-                        <img src="svg/instagram-2-1-logo-svgrepo-com.svg" alt="Instagram">
-                    </a>
-                    <a href="https://www.facebook.com/zied.algader/" target="_blank" aria-label="Facebook">
-                        <img src="svg/facebook-color-svgrepo-com.svg" alt="Facebook">
-                    </a>
+                    <a href="https://www.instagram.com/1ziiadd_/" target="_blank" aria-label="Instagram"><img src="svg/instagram-2-1-logo-svgrepo-com.svg" alt="Instagram"></a>
+                    <a href="https://www.facebook.com/zied.algader/" target="_blank" aria-label="Facebook"><img src="svg/facebook-color-svgrepo-com.svg" alt="Facebook"></a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ===== FOOTER ===== -->
-    <footer>
-        <p>built by ZiadM</p>
-    </footer>
+    <footer><p>built by wastl-shgel team</p></footer>
 
-    <!-- ===== SCRIPTS ===== -->
+    <!-- ===== LEAFLET MAP LIBRARY ===== -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+    <!-- ===== INTERACTIVE BACKGROUND ENGINE (FIXED) ===== -->
     <script>
-    // ===== HAMBURGER MENU =====
+    (function () {
+        'use strict';
+
+        const CONFIG = {
+            particles: { mobile: 35, tablet: 60, desktop: 80, largeDesktop: 120 },
+            connectionDistance: 150, connectionDistanceMobile: 100,
+            mouseRadius: 200, mouseRadiusMobile: 120, mouseForce: 0.08,
+            speed: { min: 0.15, max: 0.6 }, size: { min: 1, max: 3.5 },
+            aurora: { speed: 0.0003, opacity: 0.15 },
+            glowParticles: { count: 5, sizeRange: [80, 200], speedRange: [0.1, 0.3] }
+        };
+
+        function getDeviceType() {
+            const w = window.innerWidth;
+            if (w < 600) return 'mobile';
+            if (w < 1024) return 'tablet';
+            if (w < 1600) return 'desktop';
+            return 'largeDesktop';
+        }
+
+        class PremiumBackground {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                if (!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = []; this.glowOrbs = [];
+                this.mouse = { x: -9999, y: -9999, active: false };
+                this.time = 0;
+                this.deviceType = getDeviceType();
+                this.isMobile = this.deviceType === 'mobile';
+                this.animId = null; this.isVisible = true;
+                this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+                this.init(); this.bindEvents(); this.animate();
+            }
+
+            init() { this.resize(); this.createParticles(); this.createGlowOrbs(); }
+
+            resize() {
+                this.width = window.innerWidth; this.height = window.innerHeight;
+                this.canvas.width = Math.floor(this.width * this.dpr);
+                this.canvas.height = Math.floor(this.height * this.dpr);
+                this.canvas.style.width = this.width + 'px';
+                this.canvas.style.height = this.height + 'px';
+                this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+            }
+
+            getMousePos(e) {
+                const rect = this.canvas.getBoundingClientRect();
+                return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+            }
+
+            createParticles() {
+                this.particles = [];
+                const count = CONFIG.particles[this.deviceType] || CONFIG.particles.desktop;
+                for (let i = 0; i < count; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.width, y: Math.random() * this.height,
+                        vx: (Math.random() - 0.5) * (CONFIG.speed.max - CONFIG.speed.min) + CONFIG.speed.min,
+                        vy: (Math.random() - 0.5) * (CONFIG.speed.max - CONFIG.speed.min) + CONFIG.speed.min,
+                        size: Math.random() * (CONFIG.size.max - CONFIG.size.min) + CONFIG.size.min,
+                        depth: Math.random(), pulse: Math.random() * Math.PI * 2,
+                        hue: 180 + Math.random() * 60, alpha: 0.3 + Math.random() * 0.5
+                    });
+                }
+            }
+
+            createGlowOrbs() {
+                this.glowOrbs = [];
+                const count = this.isMobile ? 3 : CONFIG.glowParticles.count;
+                for (let i = 0; i < count; i++) {
+                    this.glowOrbs.push({
+                        x: Math.random() * this.width, y: Math.random() * this.height,
+                        size: CONFIG.glowParticles.sizeRange[0] + Math.random() * (CONFIG.glowParticles.sizeRange[1] - CONFIG.glowParticles.sizeRange[0]),
+                        vx: (Math.random() - 0.5) * CONFIG.glowParticles.speedRange[1],
+                        vy: (Math.random() - 0.5) * CONFIG.glowParticles.speedRange[1],
+                        hue: 190 + Math.random() * 80, alpha: 0.03 + Math.random() * 0.04,
+                        phase: Math.random() * Math.PI * 2
+                    });
+                }
+            }
+
+            bindEvents() {
+                window.addEventListener('mousemove', (e) => {
+                    const pos = this.getMousePos(e);
+                    this.mouse.x = pos.x; this.mouse.y = pos.y; this.mouse.active = true;
+                });
+                window.addEventListener('mouseleave', () => { this.mouse.active = false; });
+                window.addEventListener('touchmove', (e) => {
+                    if (e.touches[0]) {
+                        const pos = this.getMousePos(e.touches[0]);
+                        this.mouse.x = pos.x; this.mouse.y = pos.y; this.mouse.active = true;
+                    }
+                }, { passive: true });
+                window.addEventListener('touchend', () => { this.mouse.active = false; });
+
+                let resizeTimeout;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        this.deviceType = getDeviceType();
+                        this.isMobile = this.deviceType === 'mobile';
+                        this.resize(); this.createParticles(); this.createGlowOrbs();
+                    }, 250);
+                });
+
+                document.addEventListener('visibilitychange', () => {
+                    this.isVisible = !document.hidden;
+                    if (this.isVisible && !this.animId) this.animate();
+                });
+            }
+
+            drawAurora() {
+                const t = this.time * CONFIG.aurora.speed, ctx = this.ctx;
+                ctx.save(); ctx.globalAlpha = CONFIG.aurora.opacity;
+                const g1 = ctx.createLinearGradient(
+                    this.width * 0.5 + Math.sin(t * 2) * this.width * 0.3, 0,
+                    this.width * 0.5 + Math.cos(t * 1.5) * this.width * 0.3, this.height
+                );
+                g1.addColorStop(0, 'rgba(0,60,120,0.4)'); g1.addColorStop(0.3, 'rgba(0,150,200,0.2)');
+                g1.addColorStop(0.6, 'rgba(100,0,180,0.15)'); g1.addColorStop(1, 'rgba(0,40,80,0.3)');
+                ctx.fillStyle = g1; ctx.fillRect(0, 0, this.width, this.height); ctx.restore();
+
+                ctx.save(); ctx.globalAlpha = CONFIG.aurora.opacity * 0.7;
+                const g2 = ctx.createRadialGradient(
+                    this.width * 0.3 + Math.cos(t * 1.2) * 200, this.height * 0.4 + Math.sin(t * 0.8) * 150, 0,
+                    this.width * 0.5, this.height * 0.5, Math.max(this.width, this.height) * 0.8
+                );
+                g2.addColorStop(0, 'rgba(0,200,255,0.15)'); g2.addColorStop(0.4, 'rgba(0,100,200,0.08)');
+                g2.addColorStop(0.7, 'rgba(80,0,160,0.06)'); g2.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = g2; ctx.fillRect(0, 0, this.width, this.height); ctx.restore();
+
+                ctx.save(); ctx.globalAlpha = CONFIG.aurora.opacity * 0.4;
+                const g3 = ctx.createRadialGradient(
+                    this.width * 0.7 + Math.sin(t * 0.6) * 300, this.height * 0.6 + Math.cos(t * 0.9) * 200, 0,
+                    this.width * 0.5, this.height * 0.5, Math.max(this.width, this.height) * 0.6
+                );
+                g3.addColorStop(0, 'rgba(0,255,200,0.1)'); g3.addColorStop(0.5, 'rgba(0,150,255,0.05)');
+                g3.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = g3; ctx.fillRect(0, 0, this.width, this.height); ctx.restore();
+            }
+
+            drawGlowOrbs() {
+                const ctx = this.ctx;
+                for (const orb of this.glowOrbs) {
+                    orb.x += orb.vx; orb.y += orb.vy; orb.phase += 0.005;
+                    if (orb.x < -orb.size) orb.x = this.width + orb.size;
+                    if (orb.x > this.width + orb.size) orb.x = -orb.size;
+                    if (orb.y < -orb.size) orb.y = this.height + orb.size;
+                    if (orb.y > this.height + orb.size) orb.y = -orb.size;
+                    const pulseSize = orb.size + Math.sin(orb.phase) * 30;
+                    if (this.mouse.active) {
+                        const dx = this.mouse.x - orb.x, dy = this.mouse.y - orb.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 400) { orb.vx += dx * 0.00003; orb.vy += dy * 0.00003; }
+                    }
+                    const speed = Math.sqrt(orb.vx ** 2 + orb.vy ** 2);
+                    const maxSpeed = CONFIG.glowParticles.speedRange[1];
+                    if (speed > maxSpeed) {
+                        orb.vx = (orb.vx / speed) * maxSpeed; orb.vy = (orb.vy / speed) * maxSpeed;
+                    }
+                    const grad = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, Math.max(1, pulseSize));
+                    const hue = orb.hue + Math.sin(orb.phase * 0.5) * 20;
+                    grad.addColorStop(0, `hsla(${hue},80%,60%,${orb.alpha * 1.5})`);
+                    grad.addColorStop(0.4, `hsla(${hue},70%,50%,${orb.alpha * 0.8})`);
+                    grad.addColorStop(1, `hsla(${hue},60%,40%,0)`);
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(orb.x - pulseSize, orb.y - pulseSize, pulseSize * 2, pulseSize * 2);
+                }
+            }
+
+            drawConnections() {
+                const ctx = this.ctx;
+                const maxDist = this.isMobile ? CONFIG.connectionDistanceMobile : CONFIG.connectionDistance;
+                for (let i = 0; i < this.particles.length; i++) {
+                    const a = this.particles[i];
+                    if (a.depth < 0.3 && this.isMobile) continue;
+                    for (let j = i + 1; j < this.particles.length; j++) {
+                        const b = this.particles[j];
+                        const dx = a.x - b.x, dy = a.y - b.y;
+                        if (Math.abs(dx) > maxDist || Math.abs(dy) > maxDist) continue;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < maxDist) {
+                            const alpha = (1 - dist / maxDist) * 0.2 * Math.min(a.depth, b.depth);
+                            const hue = (a.hue + b.hue) / 2;
+                            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+                            ctx.strokeStyle = `hsla(${hue},70%,60%,${alpha})`;
+                            ctx.lineWidth = 0.5 + Math.min(a.depth, b.depth) * 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            drawMouseConnections() {
+                if (!this.mouse.active) return;
+                const ctx = this.ctx;
+                const radius = this.isMobile ? CONFIG.mouseRadiusMobile : CONFIG.mouseRadius;
+                for (const p of this.particles) {
+                    const dx = this.mouse.x - p.x, dy = this.mouse.y - p.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < radius) {
+                        const alpha = (1 - dist / radius) * 0.35;
+                        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(this.mouse.x, this.mouse.y);
+                        ctx.strokeStyle = `rgba(0,210,255,${alpha})`; ctx.lineWidth = 0.8; ctx.stroke();
+                    }
+                }
+            }
+
+            drawMouseGlow() {
+                if (!this.mouse.active) return;
+                const ctx = this.ctx;
+                const radius = this.isMobile ? 100 : 150;
+                const grad = ctx.createRadialGradient(this.mouse.x, this.mouse.y, 0, this.mouse.x, this.mouse.y, radius);
+                grad.addColorStop(0, 'rgba(0,210,255,0.08)');
+                grad.addColorStop(0.5, 'rgba(0,180,255,0.03)');
+                grad.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.save(); ctx.fillStyle = grad; ctx.beginPath();
+                ctx.arc(this.mouse.x, this.mouse.y, radius, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+            }
+
+            updateParticles() {
+                const radius = this.isMobile ? CONFIG.mouseRadiusMobile : CONFIG.mouseRadius;
+                for (const p of this.particles) {
+                    if (this.mouse.active) {
+                        const dx = p.x - this.mouse.x, dy = p.y - this.mouse.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < radius) {
+                            const force = (1 - dist / radius) * CONFIG.mouseForce;
+                            p.vx += (dx / dist) * force; p.vy += (dy / dist) * force;
+                        }
+                    }
+                    p.x += p.vx * (0.5 + p.depth * 0.5); p.y += p.vy * (0.5 + p.depth * 0.5);
+                    p.pulse += 0.02; p.vx *= 0.999; p.vy *= 0.999;
+                    const speed = Math.sqrt(p.vx ** 2 + p.vy ** 2);
+                    if (speed < CONFIG.speed.min) {
+                        const angle = Math.atan2(p.vy, p.vx);
+                        p.vx = Math.cos(angle) * CONFIG.speed.min; p.vy = Math.sin(angle) * CONFIG.speed.min;
+                    }
+                    const margin = 50;
+                    if (p.x < -margin) p.x = this.width + margin;
+                    if (p.x > this.width + margin) p.x = -margin;
+                    if (p.y < -margin) p.y = this.height + margin;
+                    if (p.y > this.height + margin) p.y = -margin;
+                }
+            }
+
+            drawParticles() {
+                const ctx = this.ctx;
+                for (const p of this.particles) {
+                    const pulseFactor = 0.7 + Math.sin(p.pulse) * 0.3;
+                    const size = Math.max(0.5, p.size * pulseFactor * (0.6 + p.depth * 0.4));
+                    const alpha = p.alpha * (0.5 + p.depth * 0.5);
+                    if (p.depth > 0.5) {
+                        const glowSize = size * 4;
+                        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, Math.max(1, glowSize));
+                        grad.addColorStop(0, `hsla(${p.hue},80%,70%,${alpha * 0.3})`);
+                        grad.addColorStop(1, `hsla(${p.hue},80%,70%,0)`);
+                        ctx.fillStyle = grad;
+                        ctx.fillRect(p.x - glowSize, p.y - glowSize, glowSize * 2, glowSize * 2);
+                    }
+                    ctx.beginPath(); ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${p.hue},80%,75%,${alpha})`; ctx.fill();
+                }
+            }
+
+            drawVignette() {
+                const ctx = this.ctx;
+                const gradient = ctx.createRadialGradient(
+                    this.width / 2, this.height / 2, this.height * 0.3,
+                    this.width / 2, this.height / 2, Math.max(this.width, this.height) * 0.75
+                );
+                gradient.addColorStop(0, 'rgba(0,0,0,0)'); gradient.addColorStop(1, 'rgba(0,0,0,0.4)');
+                ctx.fillStyle = gradient; ctx.fillRect(0, 0, this.width, this.height);
+            }
+
+            draw() {
+                const ctx = this.ctx;
+                ctx.clearRect(0, 0, this.width, this.height);
+                ctx.fillStyle = '#0a0a1a'; ctx.fillRect(0, 0, this.width, this.height);
+                this.drawAurora(); this.drawGlowOrbs(); this.drawConnections();
+                this.drawMouseConnections(); this.drawMouseGlow(); this.drawParticles(); this.drawVignette();
+            }
+
+            animate() {
+                if (!this.isVisible) { this.animId = null; return; }
+                this.time++; this.updateParticles(); this.draw();
+                this.animId = requestAnimationFrame(() => this.animate());
+            }
+
+            destroy() { if (this.animId) { cancelAnimationFrame(this.animId); this.animId = null; } }
+        }
+
+        class TestimonialsBackground {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                if (!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = []; this.time = 0;
+                this.deviceType = getDeviceType();
+                this.isMobile = this.deviceType === 'mobile';
+                this.isVisible = false; this.animId = null;
+                this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+                this.resize(); this.createParticles(); this.observeVisibility();
+            }
+
+            resize() {
+                const section = this.canvas.parentElement;
+                this.width = section ? section.offsetWidth : window.innerWidth;
+                this.height = section ? section.offsetHeight : window.innerHeight;
+                this.canvas.width = Math.floor(this.width * this.dpr);
+                this.canvas.height = Math.floor(this.height * this.dpr);
+                this.canvas.style.width = this.width + 'px';
+                this.canvas.style.height = this.height + 'px';
+                this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+            }
+
+            createParticles() {
+                this.particles = [];
+                const count = this.isMobile ? 20 : 40;
+                for (let i = 0; i < count; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.width, y: Math.random() * this.height,
+                        vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.2 - 0.1,
+                        size: Math.random() * 2 + 0.5, hue: 30 + Math.random() * 30,
+                        alpha: 0.2 + Math.random() * 0.4, pulse: Math.random() * Math.PI * 2
+                    });
+                }
+            }
+
+            observeVisibility() {
+                if ('IntersectionObserver' in window) {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            this.isVisible = entry.isIntersecting;
+                            if (this.isVisible && !this.animId) { this.resize(); this.animate(); }
+                        });
+                    }, { threshold: 0.1 });
+                    observer.observe(this.canvas.parentElement || this.canvas);
+                } else { this.isVisible = true; this.animate(); }
+                let resizeTimeout;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        this.deviceType = getDeviceType();
+                        this.isMobile = this.deviceType === 'mobile';
+                        this.resize(); this.createParticles();
+                    }, 250);
+                });
+            }
+
+            draw() {
+                const ctx = this.ctx;
+                ctx.clearRect(0, 0, this.width, this.height);
+                ctx.fillStyle = '#0f0a1e'; ctx.fillRect(0, 0, this.width, this.height);
+                const t = this.time * 0.0004;
+                ctx.save(); ctx.globalAlpha = 0.12;
+                const g = ctx.createLinearGradient(
+                    this.width * 0.5 + Math.sin(t * 1.5) * this.width * 0.3, 0,
+                    this.width * 0.5 + Math.cos(t) * this.width * 0.3, this.height
+                );
+                g.addColorStop(0, '#1a0a30'); g.addColorStop(0.3, '#2a1040');
+                g.addColorStop(0.6, '#1a0825'); g.addColorStop(1, '#0a0515');
+                ctx.fillStyle = g; ctx.fillRect(0, 0, this.width, this.height); ctx.restore();
+                ctx.save(); ctx.globalAlpha = 0.06;
+                const orbGrad = ctx.createRadialGradient(
+                    this.width * 0.5 + Math.sin(t * 0.7) * 200, this.height * 0.4 + Math.cos(t * 0.5) * 100, 0,
+                    this.width * 0.5, this.height * 0.5, Math.max(this.width, this.height) * 0.6
+                );
+                orbGrad.addColorStop(0, '#ffc1074b'); orbGrad.addColorStop(0.5, '#ff8c0054');
+                orbGrad.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = orbGrad; ctx.fillRect(0, 0, this.width, this.height); ctx.restore();
+                for (const p of this.particles) {
+                    p.x += p.vx; p.y += p.vy; p.pulse += 0.015;
+                    if (p.x < -10) p.x = this.width + 10; if (p.x > this.width + 10) p.x = -10;
+                    if (p.y < -10) p.y = this.height + 10; if (p.y > this.height + 10) p.y = -10;
+                    const pulseFactor = 0.7 + Math.sin(p.pulse) * 0.3;
+                    const size = Math.max(0.5, p.size * pulseFactor);
+                    if (size > 1) {
+                        const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, Math.max(1, size * 5));
+                        glow.addColorStop(0, `hsla(${p.hue},80%,60%,${p.alpha * 0.2})`);
+                        glow.addColorStop(1, `hsla(${p.hue},80%,60%,0)`);
+                        ctx.fillStyle = glow;
+                        ctx.fillRect(p.x - size * 5, p.y - size * 5, size * 10, size * 10);
+                    }
+                    ctx.beginPath(); ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${p.hue},80%,70%,${p.alpha})`; ctx.fill();
+                }
+                const vig = ctx.createRadialGradient(
+                    this.width / 2, this.height / 2, this.height * 0.3,
+                    this.width / 2, this.height / 2, Math.max(this.width, this.height) * 0.7
+                );
+                vig.addColorStop(0, 'rgba(0,0,0,0)'); vig.addColorStop(1, 'rgba(0,0,0,0.3)');
+                ctx.fillStyle = vig; ctx.fillRect(0, 0, this.width, this.height);
+            }
+
+            animate() {
+                if (!this.isVisible) { this.animId = null; return; }
+                this.time++; this.draw();
+                this.animId = requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        function init() {
+            new PremiumBackground('premiumBg');
+            new TestimonialsBackground('testimonialsBg');
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else { init(); }
+    })();
+    </script>
+
+    <!-- ===== PAGE SCRIPTS ===== -->
+    <script>
+    // Hamburger Menu
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const mainNav = document.getElementById('mainNav');
-
     hamburgerBtn.addEventListener('click', function() {
         const isOpen = mainNav.classList.toggle('nav-open');
         hamburgerBtn.classList.toggle('active');
         hamburgerBtn.setAttribute('aria-expanded', isOpen);
     });
-
-    // Close menu when a link is clicked
-    mainNav.querySelectorAll('a').forEach(function(link) {
+    mainNav.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', function() {
             mainNav.classList.remove('nav-open');
             hamburgerBtn.classList.remove('active');
             hamburgerBtn.setAttribute('aria-expanded', 'false');
         });
     });
-
-    // Close menu when clicking outside
     document.addEventListener('click', function(e) {
         if (!mainNav.contains(e.target) && !hamburgerBtn.contains(e.target)) {
             mainNav.classList.remove('nav-open');
@@ -331,138 +726,83 @@
         }
     });
 
-    // ===== SERVICE REQUEST WHATSAPP =====
+    // WhatsApp Functions
     function sendServiceToWhatsApp() {
         const worker = document.getElementById('worker-type').value;
         const details = document.getElementById('service-details').value;
         const phone = document.getElementById('phone').value;
-
-        if (!phone) {
-            alert('من فضلك ادخل رقم الموبايل');
-            return;
-        }
-
-        const message = encodeURIComponent(
-            'طلب خدمة جديد:\n- المهنة: ' + worker + '\n- التفاصيل: ' + details + '\n- رقم العميل: ' + phone
-        );
-        
+        if (!phone) { alert('من فضلك ادخل رقم الموبايل'); return; }
+        const message = encodeURIComponent('طلب خدمة جديد:\n- المهنة: ' + worker + '\n- التفاصيل: ' + details + '\n- رقم العميل: ' + phone);
         window.open('https://wa.me/201157586610?text=' + message, '_blank');
     }
-
-    // ===== WORKER APPLICATION WHATSAPP =====
     function sendWorkerToWhatsApp() {
         const name = document.getElementById('worker-name').value;
         const job = document.getElementById('worker-job').value;
         const details = document.getElementById('worker-details').value;
-
-        if (!name || !job) {
-            alert('من فضلك املا البيانات');
-            return;
-        }
-
-        const message = encodeURIComponent(
-            'اسم العميل: ' + name + '\nنوع الشغل: ' + job + '\nالتفاصيل: ' + details
-        );
-        
+        if (!name || !job) { alert('من فضلك املا البيانات'); return; }
+        const message = encodeURIComponent('اسم العميل: ' + name + '\nنوع الشغل: ' + job + '\nالتفاصيل: ' + details);
         window.open('https://wa.me/201068922005?text=' + message, '_blank');
     }
+    function handleWorkerRegistration(e) { e.preventDefault(); alert('شكراً لتسجيلك! هيتم التواصل معك قريباً'); }
 
-    // ===== WORKER REGISTRATION =====
-    function handleWorkerRegistration(e) {
-        e.preventDefault();
-        alert('شكراً لتسجيلك! هيتم التواصل معك قريباً');
-    }
-
-    // ===== INTERACTIVE MAP =====
+    // Map
     var map = L.map('map').setView([30.0444, 31.2357], 12);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap'
-    }).addTo(map);
-
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' }).addTo(map);
     var technicians = [
         { name: "أحمد السباك", lat: 30.0444, lng: 31.2357, job: "سباك" },
         { name: "محمود الكهربائي", lat: 29.9602, lng: 31.2569, job: "كهربائي" },
         { name: "إبراهيم نجار", lat: 30.0771, lng: 31.2859, job: "نجار" }
     ];
-
     technicians.forEach(function(tech) {
-        L.marker([tech.lat, tech.lng]).addTo(map)
-            .bindPopup('<b>' + tech.name + '</b><br>التخصص: ' + tech.job);
+        L.marker([tech.lat, tech.lng]).addTo(map).bindPopup('<b>' + tech.name + '</b><br>التخصص: ' + tech.job);
     });
 
     async function searchArea() {
         var area = document.getElementById('areaInput').value;
         if (!area) { alert("من فضلك اكتب اسم المنطقة"); return; }
-
         try {
             var response = await fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(area));
             var data = await response.json();
-
             if (data.length > 0) {
-                var lat = parseFloat(data[0].lat);
-                var lon = parseFloat(data[0].lon);
-                
+                var lat = parseFloat(data[0].lat), lon = parseFloat(data[0].lon);
                 map.setView([lat, lon], 14);
-                L.circle([lat, lon], { color: 'red', radius: 500 }).addTo(map)
-                    .bindPopup("موقعك الحالي").openPopup();
-            } else {
-                alert("لم نجد هذه المنطقة، حاول مرة أخرى");
-            }
-        } catch (e) {
-            alert("حدث خطأ في البحث، حاول مرة أخرى");
-        }
+                L.circle([lat, lon], { color: 'red', radius: 500 }).addTo(map).bindPopup("موقعك الحالي").openPopup();
+            } else { alert("لم نجد هذه المنطقة، حاول مرة أخرى"); }
+        } catch (e) { alert("حدث خطأ في البحث، حاول مرة أخرى"); }
     }
 
-    // ===== WORKER LOCATION MAP =====
+    // Worker Location Map
     var workerMap, workerMarker;
-
     async function locateWorker() {
         var area = document.getElementById('reg-area').value;
         if (!area) return;
-
         try {
             var response = await fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(area) + ', Egypt');
             var data = await response.json();
-
             if (data.length > 0) {
-                var lat = parseFloat(data[0].lat);
-                var lon = parseFloat(data[0].lon);
-
-                document.getElementById('lat').value = lat;
-                document.getElementById('lng').value = lon;
-
+                var lat = parseFloat(data[0].lat), lon = parseFloat(data[0].lon);
+                document.getElementById('lat').value = lat; document.getElementById('lng').value = lon;
                 if (!workerMap) {
-                    // Create a temporary map display
                     var mapDiv = document.createElement('div');
                     mapDiv.id = 'workerMap';
                     mapDiv.style.cssText = 'height:250px;width:100%;border-radius:12px;margin-top:15px;border:1px solid #ccc;';
                     document.getElementById('registrationForm').appendChild(mapDiv);
-
                     workerMap = L.map('workerMap').setView([lat, lon], 14);
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(workerMap);
                     workerMarker = L.marker([lat, lon], {draggable: true}).addTo(workerMap);
-                    
                     workerMarker.on('dragend', function() {
                         var pos = workerMarker.getLatLng();
-                        document.getElementById('lat').value = pos.lat;
-                        document.getElementById('lng').value = pos.lng;
+                        document.getElementById('lat').value = pos.lat; document.getElementById('lng').value = pos.lng;
                     });
                 } else {
-                    workerMap.setView([lat, lon], 14);
-                    workerMarker.setLatLng([lat, lon]);
+                    workerMap.setView([lat, lon], 14); workerMarker.setLatLng([lat, lon]);
                 }
                 setTimeout(function() { workerMap.invalidateSize(); }, 300);
             }
-        } catch (e) {
-            console.error("Error fetching location");
-        }
+        } catch (e) { console.error("Error fetching location"); }
     }
 
-    // Fix map size after page load (Leaflet bug)
-    window.addEventListener('load', function() {
-        setTimeout(function() { map.invalidateSize(); }, 300);
-    });
+    window.addEventListener('load', function() { setTimeout(function() { map.invalidateSize(); }, 300); });
     </script>
 
 </body>
